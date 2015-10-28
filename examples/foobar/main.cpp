@@ -25,7 +25,7 @@ public:
         initFoo->AddTransition(make_shared<Transition>(initBar));
         initBar->AddTransition(make_shared<Transition>(m_endState));
 
-        m_startState = initFoo;
+        SetFirstState(initFoo);
     }
 };
 
@@ -39,7 +39,7 @@ public:
         countFoo->AddTransition(make_shared<Transition>(countBar));
         countBar->AddTransition(make_shared<Transition>(m_endState));
 
-        m_startState = countFoo;
+        SetFirstState(countFoo);
     }
 };
 
@@ -62,7 +62,7 @@ public:
 
         displayFoo->AddTransition(make_shared<Transition>(displayBar));
         displayBar->AddTransition(make_shared<Transition>(m_endState));
-        m_startState = displayFoo;
+        SetFirstState(displayFoo);
 
     }
 };
@@ -93,8 +93,6 @@ protected:
     int m_foo;
     int m_bar;
 };
-
-
 
 
 int main() {
