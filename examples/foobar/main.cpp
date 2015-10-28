@@ -1,20 +1,14 @@
 #include <iostream>
-#include <typeinfo>
-#include <map>
 #include <memory>
-#include <vector>
-#include <cassert>
 
 #include <simpleFsm/fsm.h>
 #include <simpleFsm/bindablestate.h>
 #include <simpleFsm/terminationstate.h>
 
-
-
 using namespace std;
 using namespace simpleFsm;
 
-class InitFsm : public Fsm
+class InitFsm : public simpleFsm::Fsm
 {
 public:
     InitFsm(IFsm& parent, int& foo, int& bar) : Fsm(parent, "InitFsm") {
@@ -67,7 +61,7 @@ public:
     }
 };
 
-class ExampleFsm : public Fsm
+class ExampleFsm : public simpleFsm::Fsm
 {
 public:
     ExampleFsm() : Fsm("ExampleFsm") {
