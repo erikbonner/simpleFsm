@@ -10,6 +10,7 @@
 namespace simpleFsm {
 
 	class IState;
+    class IFsm;
 	
 	/// \class Transition
 	/// \brief Concrete implementation of ITransition
@@ -21,16 +22,21 @@ namespace simpleFsm {
 		/// \param target the target state for this transtion
 		/// \param guard a function that guards this transtion, i.e only when it returs true are we
 		///		allowed to perform the transition. 
-		Transition(std::shared_ptr<IState> target, std::function<bool()> guard = [] { return true; }) :
-			m_target(target), m_guard(guard) {}
+        Transition(IFsm& fsm,
+                   std::shared_ptr<IState> target,
+                   std::function<bool()> guard = [] { return true; });
 
-		/// \copydoc ITranstion::TargetState
-		virtual std::shared_ptr<IState> TargetState() { return m_target; }
+        /// \copydoc ITranstion::Apply
+        virtual bool Apply();
 
-		/// \copydoc ITranstion::Guard
-		virtual bool Guard() { return m_guard(); }
+//		/// \copydoc ITranstion::TargetState
+//		virtual std::shared_ptr<IState> TargetState() { return m_target; }
+
+//		/// \copydoc ITranstion::Guard
+//		virtual bool Guard() { return m_guard(); }
 
 	protected:
+        IFsm& m_fsm;
 		std::shared_ptr<IState> m_target;
 		std::function<bool()> m_guard;
 	};

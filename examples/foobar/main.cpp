@@ -16,8 +16,8 @@ public:
         auto initFoo = make_shared<BindableState>(*this, [&] {cout << "InitFoo::Enter()" << endl; foo = 0;});
         auto initBar = make_shared<BindableState>(*this, [&] {cout << "InitBar::Enter()" << endl; bar = 0;});
 
-        initFoo->AddTransition(make_shared<Transition>(initBar));
-        initBar->AddTransition(make_shared<Transition>(m_endState));
+        initFoo->AddTransition(make_shared<Transition>(*this, initBar));
+        initBar->AddTransition(make_shared<Transition>(*this, m_endState));
 
         SetFirstState(initFoo);
     }
@@ -30,8 +30,8 @@ public:
         auto countFoo = make_shared<BindableState>(*this, [&] {cout << "CountFoo::Enter()" << endl; foo++;});
         auto countBar = make_shared<BindableState>(*this, [&] {cout << "CountBar::Enter()" << endl; bar--;});
 
-        countFoo->AddTransition(make_shared<Transition>(countBar));
-        countBar->AddTransition(make_shared<Transition>(m_endState));
+        countFoo->AddTransition(make_shared<Transition>(*this, countBar));
+        countBar->AddTransition(make_shared<Transition>(*this, m_endState));
 
         SetFirstState(countFoo);
     }
@@ -54,8 +54,8 @@ public:
                          cout << "bar = " << bar << endl; });
 
 
-        displayFoo->AddTransition(make_shared<Transition>(displayBar));
-        displayBar->AddTransition(make_shared<Transition>(m_endState));
+        displayFoo->AddTransition(make_shared<Transition>(*this, displayBar));
+        displayBar->AddTransition(make_shared<Transition>(*this, m_endState));
         SetFirstState(displayFoo);
 
     }
@@ -70,14 +70,14 @@ public:
         auto count = make_shared<CountFsm>(*this, m_foo, m_bar);
         auto display = make_shared<DisplayFsm>(*this, m_foo, m_bar);
 
-        init->AddTransition(make_shared<Transition>(count));
-        count->AddTransition(make_shared<Transition>(display));
+        init->AddTransition(make_shared<Transition>(*this, count));
+        count->AddTransition(make_shared<Transition>(*this, display));
 
         std::function<bool()> exitGaurd = [&] {
             return ((m_foo > 2) && (m_bar < 2));
         };
-        display->AddTransition(make_shared<Transition>(make_shared<TerminationState>(*this), exitGaurd));
-        display->AddTransition(make_shared<Transition>(count));
+        display->AddTransition(make_shared<Transition>(*this, make_shared<TerminationState>(*this), exitGaurd));
+        display->AddTransition(make_shared<Transition>(*this, count));
 
         SetFirstState(init);
 

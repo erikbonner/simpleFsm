@@ -1,1 +1,2 @@
 subdirs(foobar)
+subdirs(gui)

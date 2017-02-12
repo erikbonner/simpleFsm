@@ -1,6 +1,7 @@
 set (libSimpleFsm_SRCS
   fsm.cpp  
   state.cpp
+  transition.cpp
   bindablestate.h
   fsm.h
   ifsm.h

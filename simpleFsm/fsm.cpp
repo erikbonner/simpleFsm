@@ -51,7 +51,7 @@ void Fsm::Enter()
 
 void Fsm::SetFirstState(std::shared_ptr<IState> state)
 {
-    m_startState->AddTransition(make_shared<Transition>(state));
+    m_startState->AddTransition(make_shared<Transition>(*this, state));
 }
 
 }

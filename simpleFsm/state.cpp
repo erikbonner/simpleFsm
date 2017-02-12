@@ -19,11 +19,12 @@ void State::AddTransition(shared_ptr<ITransition> t)
 bool State::Step()
 {
     for(auto t : m_transitions){
-        if(t->Guard())
-        {
-            m_fsm.SetState(t->TargetState());
-            break;
-        }
+//        if(t->Guard())
+//        {
+//            m_fsm.SetState(t->TargetState());
+//            break;
+//        }
+        if(t->Apply()){ break; }
     }
     return true;
 }
